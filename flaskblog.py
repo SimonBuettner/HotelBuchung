@@ -40,6 +40,33 @@ def booked():
         jsonausgabeGeb = json.dumps(gebucht, indent=4)
         return jsonausgabeGeb
 
+@app.route('/book/<string:roomID>')
+def bookID(roomID):
+
+    with open("hotel.csv", newline ='') as fileInputBook:
+        csvReaderBook = csv.reader(fileInputBook)
+        book = []
+        for row in csvReaderBook:
+            if (row[0] == roomID):
+                row[4] = "gebucht"
+                book.append(row)
+                  
+        jsonausgabeBook = json.dumps(book, indent=4)
+        return jsonausgabeBook
+
+@app.route('/unBook/<string:roomID>')
+def unBookID(roomID):
+
+    with open("hotel.csv", newline ='') as fileInputUnBook:
+        csvReaderUnBook = csv.reader(fileInputUnBook)
+        unBook = []
+        for row in csvReaderUnBook:
+            if (row[0] == roomID):
+                row[4] = "frei"
+                unBook.append(row)
+                  
+        jsonausgabeBook = json.dumps(unBook, indent=4)
+        return jsonausgabeBook
 
 if __name__ == '__main__':
-	app.run()
+	app.run(debug=True)
